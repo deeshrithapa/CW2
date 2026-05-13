@@ -1,53 +1,331 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
-</head>
-<body>
-    <h1>Edit User Email</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <label for="userId">User ID:</label>
-    <input type="number" id="userId" value="1">
-    <button onclick="fetchUser()">Fetch User</button>
+    <title>EduBridge International</title>
 
-    <div id="userInfo" style="margin-top: 20px;">
-        <p>Name: <input type="text" id="userName"></input></p><!--<p>Name: <span id="userName"></span></p> -->
-        <p>Email: <input type="email" id="userEmail"></input></p>
-        <button onclick="updateUser()">Update User</button>
-    </div>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
 
-    <script>
-        function fetchUser() {
-            const userId = document.getElementById('userId').value;
-            fetch(`http://localhost:3000/user/${userId}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('userName').value = data.name;
-                    document.getElementById('userEmail').value = data.email;
-                })
-                .catch(error => console.error('Error:', error));
-        }
+  <body>
+    <!-- Navbar  -->
+    <header class="header" id="site-header"></header>
 
-        function updateUser() {
-            const userId = document.getElementById('userId').value;
-            const newName = document.getElementById('userName').value;
-            const newEmail = document.getElementById('userEmail').value;
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-content">
+        <!-- trust badge above main heading -->
+        <span class="badge"> TRUSTED BY 1,200+ STUDENTS WORLDWIDE </span>
 
-            fetch(`http://localhost:3000/user/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: newName, email: newEmail }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(`User updated to: Name - ${data.name}, Email - ${data.email}`);
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    </script>
-</body>
+        <h1>
+          Your Path to a World-Class <br />
+          University Starts Here
+        </h1>
+
+        <p>
+          EduBridge International provides free, expert guidance to
+          international students seeking admission to leading universities in
+          the UK, Europe, Canada, and Australia.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="pages/contact.html" class="book-btn">
+            Book a Free Consultation
+          </a>
+
+          <a href="pages/university.html" class="uni-btn">
+            Explore Universities
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <section class="stats">
+      <div class="stats-container">
+        <div class="stat-item">
+          <h2>1,200+</h2>
+          <p>Students Placed</p>
+        </div>
+        <div class="stat-item">
+          <h2>10+</h2>
+          <p>Partner Universities</p>
+        </div>
+        <div class="stat-item">
+          <h2>97%</h2>
+          <p>Offer Rate</p>
+        </div>
+        <div class="stat-item">
+          <h2>100%</h2>
+          <p>Free To Students</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- how it works -->
+
+    <section class="process">
+      <div class="container">
+        <h2 class="section-title">How EduBridge Works</h2>
+
+        <p class="section-subtitle">
+          Our structured three-step process guides you from initial enquiry to
+          confirmed university offer.
+        </p>
+
+        <!-- Timeline -->
+        <div class="process-steps">
+          <!-- Step 1 -->
+          <div class="step">
+            <div class="step-circle">1</div>
+
+            <h3>Tell Us Your Goals</h3>
+
+            <p>
+              Book a free consultation or send us an enquiry. Our advisors will
+              discuss your academic background, career ambitions, and study
+              preferences.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step">
+            <div class="step-circle">2</div>
+
+            <h3>Receive a Tailored Plan</h3>
+
+            <p>
+              We match you with suitable partner universities, guide your
+              application, review your personal statement, and prepare your
+              documentation.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step">
+            <div class="step-circle">3</div>
+
+            <h3>Accept Your Offer</h3>
+
+            <p>
+              Once you receive your university offer, we assist with visa
+              applications, pre-departure preparation, and settling into student
+              life.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Section -->
+
+    <section class="services">
+      <div class="container">
+        <h2 class="section-title">Our Services</h2>
+
+        <p class="section-subtitle">
+          Everything you need for a successful international university
+          application — all completely free.
+        </p>
+        <div class="services-grid">
+          <!-- Card 1 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3>University Selection</h3>
+            <p>
+              We identify universities that match your academic profile, subject
+              interests, budget, and career goals.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-file-signature"></i></div>
+            <h3>Application Support</h3>
+            <p>
+              Our advisors guide you through every step of the application
+              process, ensuring everything is submitted correctly.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-pen-nib"></i></div>
+            <h3>Personal Statement</h3>
+            <p>
+              We help you craft a compelling personal statement that highlights
+              your strengths and motivation.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-passport"></i></div>
+            <h3>Visa Guidance</h3>
+            <p>
+              Step-by-step support with visa applications, documentation, and
+              interview preparation.
+            </p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-coins"></i></div>
+            <h3>Scholarship Guidance</h3>
+            <p>
+              We help you find scholarships and funding opportunities to reduce
+              your study costs.
+            </p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="service-card">
+            <div class="icon"><i class="fas fa-plane-departure"></i></div>
+            <h3>Pre-Departure Support</h3>
+            <p>
+              From accommodation to travel preparation, we ensure you're ready
+              before departure.
+            </p>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="navi-btn">
+          <a href="pages/service.html">View All Services </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- countries  -->
+
+    <section class="countries">
+      <div class="container">
+        <h2 class="section-title">Your dream study destination awaits</h2>
+        <p class="section-subtitle">
+          Start your inspiring academic journey in these vibrant and welcoming
+          study destinations!
+        </p>
+
+        <div class="country-container">
+          <div class="country-card">
+            <img src="images/australia.jpg" alt="Australia" />
+            <div class="overlay">Australia</div>
+          </div>
+          <div class="country-card">
+            <img src="images/canada.jpg" alt="Canada" />
+            <div class="overlay">Canada</div>
+          </div>
+
+          <div class="country-card">
+            <img src="images/uk.jpg" alt="UK" />
+            <div class="overlay">UK</div>
+          </div>
+
+          <div class="country-card">
+            <img src="images/usa.jpg" alt="USA" />
+            <div class="overlay">USA</div>
+          </div>
+        </div>
+        <!-- btn -->
+        <div class="navi-btn">
+          <a href="pages/university.html">View All Universities</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- testimonials -->
+    <section class="testimonials">
+      <div class="container">
+        <h2 class="section-title">What Our Students Say</h2>
+        <p class="section-subtitle">
+          Hear from students who successfully secured offers from top
+          universities worldwide.
+        </p>
+
+        <div class="testimonial-container">
+          <!-- Card 1 -->
+          <div class="testimonial-card">
+            <span class="quote">"</span>
+            <p>
+              EduBridge made what felt like an impossible process feel
+              completely manageable. I received an offer from the University of
+              Edinburgh within six weeks.
+            </p>
+
+            <div class="student">
+              <div class="avatar">A</div>
+              <div>
+                <h4>Arjun Thapa</h4>
+                <span>BSc Computer Science — University of Edinburgh</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="testimonial-card">
+            <span class="quote">"</span>
+            <p>
+              I had no idea where to begin. The team at EduBridge helped me find
+              scholarship opportunities I wasn’t even aware of and made sure my
+              application was perfect.
+            </p>
+
+            <div class="student">
+              <div class="avatar">R</div>
+              <div>
+                <h4>Remi Cruz</h4>
+                <span>MSc Data Science — University of Manchester</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="testimonial-card">
+            <span class="quote">"</span>
+            <p>
+              The visa guidance alone was worth it. I was confused about the CAS
+              process but my advisor walked me through it step by step. I am now
+              studying at Warwick and loving it.
+            </p>
+
+            <div class="student">
+              <div class="avatar">E</div>
+              <div>
+                <h4>Emily Ha</h4>
+                <span>MSc Business Analytics — University of Warwick</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- cta -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Start Your Study Abroad Journey?</h2>
+          <p>
+            Book a free consultation with our expert advisors and take the first
+            step towards your dream university.
+          </p>
+          <a href="pages/contact.html" class="cta-btn">Book a Consultation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="site-footer"></footer>
+
+    <script src="js/components.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>

@@ -42,8 +42,7 @@ CREATE TABLE consultations (
     study_level VARCHAR(100),
     preferred_date DATE,
     message TEXT,
-    status VARCHAR(50) DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE enquiries (

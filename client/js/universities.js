@@ -9,14 +9,19 @@ let universitiesData = [];
 
 // ================== FETCH DATA ==================
 
-fetch("../data/data.json")
+fetch("http://localhost:3000/universities")
   .then(function (response) {
     return response.json();
   })
   .then(function (data) {
-    universitiesData = data; // store data
-    displayUniversities(data); // show all universities
-    populateFilter(data); // fill dropdown
+    universitiesData = data;
+
+    displayUniversities(data);
+
+    populateFilter(data);
+  })
+  .catch(function (error) {
+    console.log(error);
   });
 
 // ================== DISPLAY UNIVERSITIES ==================

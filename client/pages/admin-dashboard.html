@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <h1>Admin Dashboard</h1>
+
+    <div>
+      <a href="manage-users.html">Manage Users</a>
+    </div>
+
+    <div>
+      <a href="manage-universities.html">Manage Universities</a>
+    </div>
+
+    <div>
+      <a href="view-enquiries.html">View Enquiries</a>
+    </div>
+
+    <div>
+      <a href="view-consultations.html">View Consultations</a>
+    </div>
+
+    <button id="logoutBtn">Logout</button>
+
+    <script>
+      // Check if logged in
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      // Not logged in
+      if (!user) {
+        window.location.href = "login.html";
+      }
+
+      // Not admin
+      if (user.role !== "admin") {
+        window.location.href = "../index.html";
+      }
+
+      // Logout
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          localStorage.removeItem("user");
+          window.location.href = "login.html";
+        });
+    </script>
+  </body>
+</html>
