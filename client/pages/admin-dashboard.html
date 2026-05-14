@@ -2,45 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <h1>Admin Dashboard</h1>
+    <div class="admin-page">
+      <div class="admin-topbar">
+        <h1 class="admin-title">Admin Dashboard</h1>
+        <button class="admin-logout-btn" id="logoutBtn">Logout</button>
+      </div>
 
-    <div>
-      <a href="manage-users.html">Manage Users</a>
+      <div class="admin-links">
+        <a href="manage-users.html" class="admin-link-btn">👤 Manage Users</a>
+        <a href="manage-universities.html" class="admin-link-btn"
+          >🏫 Manage Universities</a
+        >
+        <a href="view-enquiries.html" class="admin-link-btn"
+          >📩 View Enquiries</a
+        >
+        <a href="view-consultations.html" class="admin-link-btn"
+          >📅 View Consultations</a
+        >
+      </div>
     </div>
-
-    <div>
-      <a href="manage-universities.html">Manage Universities</a>
-    </div>
-
-    <div>
-      <a href="view-enquiries.html">View Enquiries</a>
-    </div>
-
-    <div>
-      <a href="view-consultations.html">View Consultations</a>
-    </div>
-
-    <button id="logoutBtn">Logout</button>
 
     <script>
-      // Check if logged in
       const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) window.location.href = "login.html";
+      if (user.role !== "admin") window.location.href = "../index.html";
 
-      // Not logged in
-      if (!user) {
-        window.location.href = "login.html";
-      }
-
-      // Not admin
-      if (user.role !== "admin") {
-        window.location.href = "../index.html";
-      }
-
-      // Logout
       document
         .getElementById("logoutBtn")
         .addEventListener("click", function () {

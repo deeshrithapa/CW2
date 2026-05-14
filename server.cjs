@@ -273,3 +273,26 @@ app.put("/universities/:id", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+app.delete("/universities/:id", async (req, res) => {
+
+  const { id } = req.params;
+
+  try {
+
+    await pool.query(
+      "DELETE FROM universities WHERE id = $1",
+      [id]
+    );
+
+    res.json({
+      success: true,
+      message: "University deleted",
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(500).send("Server error");
+  }
+});

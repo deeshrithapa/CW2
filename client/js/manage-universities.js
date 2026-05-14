@@ -14,20 +14,32 @@ async function loadUniversities() {
 
     tableBody.innerHTML = "";
 
-    universities.forEach(function (uni) {
+    universities.forEach(function (uni, index) {
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${uni.id}</td>
+       <td>${index + 1}</td>
         <td>${uni.name}</td>
         <td>${uni.country}</td>
         <td>${uni.city}</td>
 
-        <td>
-          <button class="edit-btn" onclick="editUniversity(${uni.id})">
-            Edit
-          </button>
-        </td>
+       <td>
+
+  <button
+    class="edit-btn"
+    onclick="editUniversity(${uni.id})"
+  >
+    Edit
+  </button>
+
+  <button
+    class="delete-btn"
+    onclick="deleteUniversity(${uni.id})"
+  >
+    Delete
+  </button>
+
+</td>
       `;
 
       tableBody.appendChild(row);
@@ -168,6 +180,31 @@ function clearForm() {
   document.getElementById("description").value = "";
 }
 
+// ================= DELETE UNIVERSITY =================
+
+async function deleteUniversity(id) {
+  const confirmDelete = confirm(
+    "Are you sure you want to delete this university?",
+  );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  try {
+    await fetch(`http://localhost:3000/universities/${id}`, {
+      method: "DELETE",
+    });
+
+    alert("University deleted successfully");
+
+    loadUniversities();
+  } catch (error) {
+    console.log(error);
+
+    alert("Delete failed");
+  }
+}
 // ================= INITIAL LOAD =================
 
 loadUniversities();

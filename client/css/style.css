@@ -508,14 +508,15 @@ section {
   flex-direction: column;
   justify-content: center;
   padding: 60px 56px;
-  position: relative; 
+  position: relative;
 }
 .auth-left h1 {
   font-size: 40px;
   color: #ffffff;
   line-height: 1.2;
   margin-bottom: 18px;
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-left p {
@@ -523,13 +524,12 @@ section {
   font-size: 18px;
   line-height: 1.7;
   max-width: 360px;
-  
 }
 .auth-features {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 18px;  
+  gap: 18px;
 }
 .auth-feature {
   display: flex;
@@ -540,11 +540,14 @@ section {
 }
 
 .auth-feature-icon {
-  width: 36px; height: 36px;
+  width: 36px;
+  height: 36px;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
 }
 
 /* ── RIGHT PANEL ── */
@@ -626,11 +629,10 @@ section {
 .auth-input-wrap > i {
   position: absolute;
   left: 14px;
-  top: 50%; 
+  top: 50%;
   transform: translateY(-50%);
   color: #575656;
   font-size: 14px;
- 
 }
 
 .auth-input-wrap input {
@@ -654,13 +656,13 @@ section {
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
-  cursor: pointer; 
+  cursor: pointer;
   margin-top: 4px;
   font-family: inherit;
 }
 .auth-submit:hover {
   background: #e7e0f8;
-  color:#3e1f6f ; 
+  color: #3e1f6f;
 }
 
 /* ── TERMS ── */
@@ -676,24 +678,30 @@ section {
   text-decoration: none;
   font-size: medium;
 }
-.auth-terms a:hover { text-decoration: underline; }
+.auth-terms a:hover {
+  text-decoration: underline;
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
-  .auth-page { grid-template-columns: 1fr; }
-  .auth-left  { display: none; }
-  .auth-right { padding: 40px 20px; }
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+  .auth-left {
+    display: none;
+  }
+  .auth-right {
+    padding: 40px 20px;
+  }
 }
 
 @media (max-width: 480px) {
-  .auth-row { grid-template-columns: 1fr; }
+  .auth-row {
+    grid-template-columns: 1fr;
+  }
 }
 
-
-
-
-
-/* ========================================================  HERO SECTION ================================================== */
+/* ========================================================  HERO SECTION =============================================== */
 
 .contact-hero {
   background: linear-gradient(135deg, #1a0636, #8a63ff);
@@ -1206,6 +1214,239 @@ section {
   background: #4b2d87;
   border-radius: 3px;
 }
+/* ================================================= ADMIN =================================================== */
+
+/* ================================================= ADMIN PAGES ================================================= */
+
+/* Page wrapper */
+.admin-page {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+/* Top bar — title and button side by side */
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.admin-title {
+  font-size: 24px;
+  color: #3a1f70;
+  font-weight: 700;
+}
+
+/* Back button */
+.back-btn {
+  text-decoration: none;
+  color: #4b2d87;
+  font-size: 14px;
+  font-weight: 600;
+  border: 2px solid #4b2d87;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.back-btn:hover {
+  background: #4b2d87;
+  color: white;
+}
+
+/* Logout button */
+.admin-logout-btn {
+  padding: 8px 18px;
+  background: transparent;
+  border: 2px solid #c0392b;
+  color: #c0392b;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.admin-logout-btn:hover {
+  background: #c0392b;
+  color: white;
+}
+
+/* Dashboard links — simple grid of buttons */
+.admin-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-link-btn {
+  display: block;
+  text-decoration: none;
+  background: white;
+  color: #3a1f70;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 24px 20px;
+  border-radius: 12px;
+  border: 1.5px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-link-btn:hover {
+  background: #f0edf8;
+  border-color: #4b2d87;
+  color: #4b2d87;
+}
+
+/* Form — 2 column grid */
+.admin-form {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-form input[type="text"] {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a0636;
+  background: #fafafa;
+  font-family: inherit;
+}
+
+.admin-form input[type="text"]:focus {
+  outline: none;
+  border-color: #4b2d87;
+  background: white;
+}
+
+/* Textarea spans full width */
+.admin-form textarea {
+  grid-column: 1 / -1;
+  padding: 11px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1a0636;
+  background: #fafafa;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 90px;
+}
+
+.admin-form textarea:focus {
+  outline: none;
+  border-color: #4b2d87;
+  background: white;
+}
+
+/* Save button spans full width */
+.admin-btn {
+  grid-column: 1 / -1;
+  padding: 12px;
+  background: #4b2d87;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.admin-btn:hover {
+  background: #3a1f70;
+}
+
+/* Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  font-size: 14px;
+}
+
+.admin-table thead {
+  background: #3c1c78;
+  color: white;
+}
+
+.admin-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  color: #333;
+  border-bottom: 1px solid #f0edf8;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: #f9f7ff;
+}
+
+.admin-table tbody tr:hover {
+  background: #f0edf8;
+}
+
+/* Edit / Delete buttons */
+.edit-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #e7e0f8;
+  color: #4b2d87;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-right: 6px;
+  font-family: inherit;
+}
+
+.edit-btn:hover {
+  background: #4b2d87;
+  color: white;
+}
+
+.delete-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #fdecea;
+  color: #c0392b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.delete-btn:hover {
+  background: #c0392b;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .admin-links {
+    grid-template-columns: 1fr;
+  }
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* =======================================================
    RESPONSIVE STYLES
@@ -1387,11 +1628,19 @@ section {
 }
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
-  .auth-page { grid-template-columns: 1fr; }
-  .auth-left  { display: none; }
-  .auth-right { padding: 40px 20px; }
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+  .auth-left {
+    display: none;
+  }
+  .auth-right {
+    padding: 40px 20px;
+  }
 }
 
 @media (max-width: 480px) {
-  .auth-row { grid-template-columns: 1fr; }
+  .auth-row {
+    grid-template-columns: 1fr;
+  }
 }
