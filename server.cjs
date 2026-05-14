@@ -72,24 +72,16 @@ app.post("/user", async (req, res) => {
     console.error(err);
     res.status(500).send("Server error");
   }
-}); 
+});
 
 app.post("/register", async (req, res) => {
-  const {
-    full_name,  
-    email,
-    password,
-    age,
-    address,
-    phone,
-  } = req.body;
+  const { full_name, email, password, age, address, phone } = req.body;
 
   try {
-
     // Check if email already exists
     const existingUser = await pool.query(
       "SELECT * FROM users WHERE email = $1",
-      [email]
+      [email],
     );
 
     if (existingUser.rows.length > 0) {
@@ -105,14 +97,7 @@ app.post("/register", async (req, res) => {
       (full_name, email, password, age, address, phone)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING id, full_name, email, role`,
-      [
-        full_name,
-        email,
-        password,
-        age,
-        address,
-        phone,
-      ]
+      [full_name, email, password, age, address, phone],
     );
 
     res.json({
@@ -120,9 +105,7 @@ app.post("/register", async (req, res) => {
       message: "Registration successful",
       user: result.rows[0],
     });
-
   } catch (err) {
-
     console.error(err);
 
     res.status(500).json({
@@ -191,16 +174,8 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 app.post("/universities", async (req, res) => {
-  const {
-    name,
-    country,
-    city,
-    courses,
-    tuition,
-    description,
-    image,
-    website,
-  } = req.body;
+  const { name, country, city, courses, tuition, description, image, website } =
+    req.body;
 
   try {
     const result = await pool.query(
@@ -208,16 +183,7 @@ app.post("/universities", async (req, res) => {
       (name, country, city, courses, tuition, description, image, website)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
       RETURNING *`,
-      [
-        name,
-        country,
-        city,
-        courses,
-        tuition,
-        description,
-        image,
-        website,
-      ]
+      [name, country, city, courses, tuition, description, image, website],
     );
 
     res.json(result.rows[0]);
@@ -229,16 +195,8 @@ app.post("/universities", async (req, res) => {
 app.put("/universities/:id", async (req, res) => {
   const { id } = req.params;
 
-  const {
-    name,
-    country,
-    city,
-    courses,
-    tuition,
-    description,
-    image,
-    website,
-  } = req.body;
+  const { name, country, city, courses, tuition, description, image, website } =
+    req.body;
 
   try {
     const result = await pool.query(
@@ -254,17 +212,7 @@ app.put("/universities/:id", async (req, res) => {
        website=$8
        WHERE id=$9
        RETURNING *`,
-      [
-        name,
-        country,
-        city,
-        courses,
-        tuition,
-        description,
-        image,
-        website,
-        id,
-      ]
+      [name, country, city, courses, tuition, description, image, website, id],
     );
 
     res.json(result.rows[0]);
@@ -274,25 +222,113 @@ app.put("/universities/:id", async (req, res) => {
   }
 });
 app.delete("/universities/:id", async (req, res) => {
-
   const { id } = req.params;
 
   try {
-
-    await pool.query(
-      "DELETE FROM universities WHERE id = $1",
-      [id]
-    );
+    await pool.query("DELETE FROM universities WHERE id = $1", [id]);
 
     res.json({
       success: true,
       message: "University deleted",
     });
-
   } catch (err) {
-
     console.error(err);
 
+    res.status(500).send("Server error");
+  }
+});
+// ==================== ENQUIRIES ROUTES ====================
+
+// GET all enquiries
+app.get("/enquiries", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM enquiries ORDER BY created_at DESC",
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// POST a new enquiry (called from contact.js form)
+app.post("/enquiries", async (req, res) => {
+  const { full_name, email, message } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO enquiries (full_name, email, message)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
+      [full_name, email, message],
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// DELETE an enquiry by ID
+app.delete("/enquiries/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query("DELETE FROM enquiries WHERE id = $1", [id]);
+    res.json({ success: true, message: "Enquiry deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// ==================== CONSULTATIONS ROUTES ====================
+
+// GET all consultations
+app.get("/consultations", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM consultations ORDER BY created_at DESC",
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// POST a new consultation (called from contact.js form)
+app.post("/consultations", async (req, res) => {
+  const {
+    full_name,
+    email,
+    phone,
+    address,
+    study_level,
+    preferred_date,
+    message,
+  } = req.body;
+  try {
+    const result = await pool.query(
+      `INSERT INTO consultations (full_name, email, phone, address, study_level, preferred_date, message)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING *`,
+      [full_name, email, phone, address, study_level, preferred_date, message],
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server error");
+  }
+});
+
+// DELETE a consultation by ID
+app.delete("/consultations/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query("DELETE FROM consultations WHERE id = $1", [id]);
+    res.json({ success: true, message: "Consultation deleted" });
+  } catch (err) {
+    console.error(err);
     res.status(500).send("Server error");
   }
 });

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Consultations – Admin</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="admin-page">
+      <!-- TOP BAR -->
+      <div class="admin-topbar">
+        <h1 class="admin-title">📅 View Consultations</h1>
+        <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+      </div>
+
+      <!-- CONSULTATIONS TABLE -->
+      <div class="admin-table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Study Level</th>
+              <th>Preferred Date</th>
+              <th>Message</th>
+              <th>Submitted</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="consultations-table-body">
+            <tr>
+              <td colspan="9">Loading consultations...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end admin-page -->
+
+    <script>
+      // ── GUARD: only admins can see this page ──────────────────
+      var user = JSON.parse(localStorage.getItem("user"));
+      if (!user) window.location.href = "login.html";
+      if (user.role !== "admin") window.location.href = "../index.html";
+
+      // ── Fetch all consultations from the API ──────────────────
+      function fetchConsultations() {
+        fetch("/consultations")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (consultations) {
+            var tbody = document.getElementById("consultations-table-body");
+
+            // If no consultations found
+            if (consultations.length === 0) {
+              tbody.innerHTML =
+                "<tr><td colspan='9'>No consultations found.</td></tr>";
+              return;
+            }
+
+            // Build one row per consultation
+            var rows = "";
+            consultations.forEach(function (c) {
+              // Format submitted date e.g. 12 May 2025
+              var submitted = new Date(c.created_at).toLocaleDateString(
+                "en-GB",
+                {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                },
+              );
+
+              // Format preferred date (date only, no time)
+              var preferred = c.preferred_date
+                ? new Date(c.preferred_date).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })
+                : "—";
+
+              rows += "<tr>";
+              rows += "<td>" + c.id + "</td>";
+              rows += "<td>" + c.full_name + "</td>";
+              rows += "<td>" + c.email + "</td>";
+              rows += "<td>" + (c.phone || "—") + "</td>";
+              rows += "<td>" + (c.study_level || "—") + "</td>";
+              rows += "<td>" + preferred + "</td>";
+              rows +=
+                "<td class='message-cell'>" + (c.message || "—") + "</td>";
+              rows += "<td>" + submitted + "</td>";
+              rows += "<td>";
+              rows +=
+                "<button class='delete-btn' onclick='deleteConsultation(" +
+                c.id +
+                ")'> Delete</button>";
+              rows += "</td>";
+              rows += "</tr>";
+            });
+
+            tbody.innerHTML = rows;
+          })
+          .catch(function (err) {
+            console.error("Error fetching consultations:", err);
+            document.getElementById("consultations-table-body").innerHTML =
+              "<tr><td colspan='9'>Failed to load consultations.</td></tr>";
+          });
+      }
+
+      // ── Delete a consultation by ID ───────────────────────────
+      function deleteConsultation(id) {
+        // Ask admin to confirm before deleting
+        var confirmed = confirm(
+          "Are you sure you want to delete this consultation?",
+        );
+        if (!confirmed) return;
+
+        fetch("/consultations/" + id, {
+          method: "DELETE",
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function () {
+            alert("Consultation deleted.");
+            fetchConsultations(); // refresh table
+          })
+          .catch(function (err) {
+            console.error("Delete error:", err);
+            alert("Failed to delete consultation.");
+          });
+      }
+
+      // Run when page loads
+      fetchConsultations();
+    </script>
+  </body>
+</html>

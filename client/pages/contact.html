@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>EduBridge International</title>
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <!-- Navbar  -->
+    <!-- Navbar -->
     <header class="header" id="site-header"></header>
+
     <!-- CONTACT HERO -->
     <section class="contact-hero">
       <div class="contact-hero-content">
@@ -36,7 +36,49 @@
           <h3>Book a Free Consultation</h3>
           <p class="card-sub">Speak with an expert advisor - completely free</p>
 
-          <div id="consultation-form"></div>
+          <form id="consultation-form">
+            <label>Full Name *</label>
+            <input
+              type="text"
+              id="c-full_name"
+              placeholder="e.g. Aryan Thapa"
+            />
+
+            <label>Email Address *</label>
+            <input
+              type="email"
+              id="c-email"
+              placeholder="e.g. aryan@email.com"
+            />
+
+            <label>Phone Number</label>
+            <input type="text" id="c-phone" placeholder="+44 497 900XXX" />
+
+            <label>Address</label>
+            <input
+              type="text"
+              id="c-address"
+              placeholder="e.g. Portsmouth, UK"
+            />
+
+            <label>Study Level *</label>
+            <input
+              type="text"
+              id="c-study_level"
+              placeholder="e.g. Under-graduate"
+            />
+
+            <label>Preferred Consultation Date *</label>
+            <input type="date" id="c-preferred_date" />
+
+            <label>Tell Us About Your Goals</label>
+            <textarea
+              id="c-message"
+              placeholder="E.g. I am looking to study Computer Science..."
+            ></textarea>
+
+            <button type="submit" class="form-btn">Book Consultation</button>
+          </form>
         </div>
 
         <!-- RIGHT SIDE -->
@@ -45,9 +87,32 @@
           <div class="contact-card">
             <h3>General Enquiry</h3>
             <p class="card-sub">Get a response within 1–2 business days</p>
-            <!-- enquiry form from contact.js -->
 
-            <div id="enquiry-form"></div>
+            <form id="enquiry-form">
+              <label>Full Name *</label>
+              <input
+                type="text"
+                id="e-full_name"
+                placeholder="e.g. Aryan Thapa"
+              />
+
+              <label>Email Address *</label>
+              <input
+                type="email"
+                id="e-email"
+                placeholder="e.g. aryan@email.com"
+              />
+
+              <label>Your Message *</label>
+              <textarea
+                id="e-message"
+                placeholder="Describe your question in detail"
+              ></textarea>
+
+              <button type="submit" class="form-btn outline">
+                Send Enquiry
+              </button>
+            </form>
           </div>
 
           <!-- CONTACT INFO -->
@@ -80,9 +145,103 @@
 
     <!-- FOOTER -->
     <footer class="footer" id="site-footer"></footer>
-    
+
+    <!-- Components (navbar + footer) -->
     <script src="../js/components.js"></script>
-    <script src="../js/contact.js"></script>
     <script src="../js/script.js" defer></script>
+
+    <script>
+      // ================== BOOK CONSULTATION ==================
+
+      // Listen for consultation form submission
+      document
+        .getElementById("consultation-form")
+        .addEventListener("submit", function (e) {
+          // Stop the page from refreshing
+          e.preventDefault();
+
+          // Collect all values from the form fields
+          var data = {
+            full_name: document.getElementById("c-full_name").value.trim(),
+            email: document.getElementById("c-email").value.trim(),
+            phone: document.getElementById("c-phone").value.trim(),
+            address: document.getElementById("c-address").value.trim(),
+            study_level: document.getElementById("c-study_level").value.trim(),
+            preferred_date: document.getElementById("c-preferred_date").value,
+            message: document.getElementById("c-message").value.trim(),
+          };
+
+          // Basic validation — name and email are required
+          if (!data.full_name || !data.email) {
+            alert("Please fill in your Full Name and Email.");
+            return;
+          }
+
+          // Send data to the backend API
+          fetch("/consultations", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function () {
+              // Show success message and clear the form
+              alert(
+                "Consultation booked successfully! Thank you! We will get back to you within 24 hours.",
+              );
+              document.getElementById("consultation-form").reset();
+            })
+            .catch(function (err) {
+              console.error("Consultation error:", err);
+              alert("Something went wrong. Please try again.");
+            });
+        });
+
+      // ================== GENERAL ENQUIRY ==================
+
+      // Listen for enquiry form submission
+      document
+        .getElementById("enquiry-form")
+        .addEventListener("submit", function (e) {
+          // Stop the page from refreshing
+          e.preventDefault();
+
+          // Collect all values from the form fields
+          var data = {
+            full_name: document.getElementById("e-full_name").value.trim(),
+            email: document.getElementById("e-email").value.trim(),
+            message: document.getElementById("e-message").value.trim(),
+          };
+
+          // Basic validation — all fields are required
+          if (!data.full_name || !data.email || !data.message) {
+            alert("Please fill in all fields before submitting.");
+            return;
+          }
+
+          // Send data to the backend API
+          fetch("/enquiries", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function () {
+              // Show success message and clear the form
+              alert(
+                "Enquiry sent successfully! Thank you! We will get back to you within 24 hours.",
+              );
+              document.getElementById("enquiry-form").reset();
+            })
+            .catch(function (err) {
+              console.error("Enquiry error:", err);
+              alert("Something went wrong. Please try again.");
+            });
+        });
+    </script>
   </body>
 </html>
