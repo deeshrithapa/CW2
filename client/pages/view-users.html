@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>View Users</title>
+
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <section class="users-section">
+      <!-- TOP -->
+
+      <div class="admin-topbar">
+        <h1 class="admin-title">Registered Users</h1>
+
+        <a href="admin-dashboard.html" class="back-btn">
+          ← Back to Dashboard
+        </a>
+      </div>
+      <!-- TABLE -->
+
+      <div class="table-wrapper">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+
+          <tbody id="usersTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <script src="../js/view-users.js"></script>
+  </body>
+</html>

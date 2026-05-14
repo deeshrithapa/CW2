@@ -682,6 +682,18 @@ section {
   text-decoration: underline;
 }
 
+.demo-credentials {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.demo-credentials h4 {
+  margin-bottom: 10px;
+}
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
   .auth-page {
@@ -1436,6 +1448,51 @@ section {
 .delete-btn:hover {
   background: #c0392b;
   color: white;
+}
+/* =========================================
+   VIEW USERS PAGE
+========================================= */
+
+.users-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px 60px;
+}
+
+/* responsive table */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* role badge */
+.role-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* admin role */
+.role-admin {
+  background: #e7e0f8;
+  color: #4b2d87;
+}
+
+/* student role */
+.role-student {
+  background: #eef7ed;
+  color: #2e7d32;
+}
+
+/* empty message */
+.empty-message {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  color: #666;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* Responsive */
