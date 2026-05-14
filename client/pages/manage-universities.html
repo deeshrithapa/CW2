@@ -14,6 +14,8 @@
         <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
       </div>
 
+      <!-- ================= FORM ================= -->
+
       <div class="admin-form">
         <input type="hidden" id="universityId" />
         <input type="text" id="name" placeholder="University Name" />
@@ -27,25 +29,203 @@
           id="description"
           placeholder="University Description"
         ></textarea>
-        <button class="admin-btn" id="saveUniversityBtn">
+        <button class="admin-btn" onclick="saveUniversity()">
           Save University
         </button>
       </div>
 
+      <!-- ================= TABLE ================= -->
+
       <table class="admin-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Country</th>
             <th>City</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="universitiesTableBody"></tbody>
       </table>
     </div>
 
-    <script src="../js/manage-universities.js"></script>
+    <script>
+      // ================= LOAD UNIVERSITIES =================
+
+      function loadUniversities() {
+        fetch("http://localhost:3000/universities")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (universities) {
+            const tableBody = document.getElementById("universitiesTableBody");
+
+            tableBody.innerHTML = "";
+
+            universities.forEach(function (uni, index) {
+              const row = document.createElement("tr");
+
+              row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${uni.name}</td>
+                <td>${uni.country}</td>
+                <td>${uni.city}</td>
+                <td>
+                  <button class="edit-btn" onclick="editUniversity(${uni.id})">Edit</button>
+                  <button class="delete-btn" onclick="deleteUniversity(${uni.id})">Delete</button>
+                </td>
+              `;
+
+              tableBody.appendChild(row);
+            });
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+            alert("Failed to load universities");
+          });
+      }
+
+      // ================= SAVE UNIVERSITY (ADD OR UPDATE) =================
+
+      function saveUniversity() {
+        const universityId = document.getElementById("universityId").value;
+
+        const universityData = {
+          name: document.getElementById("name").value,
+          country: document.getElementById("country").value,
+          city: document.getElementById("city").value,
+          courses: document.getElementById("courses").value,
+          tuition: document.getElementById("tuition").value,
+          image: document.getElementById("image").value,
+          website: document.getElementById("website").value,
+          description: document.getElementById("description").value,
+        };
+
+        // ================= UPDATE =================
+
+        if (universityId) {
+          fetch("http://localhost:3000/universities/" + universityId, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(universityData),
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              alert("University updated successfully");
+              clearForm();
+              loadUniversities();
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+              alert("Update failed");
+            });
+
+          // ================= ADD =================
+        } else {
+          fetch("http://localhost:3000/universities", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(universityData),
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (data) {
+              alert("University added successfully");
+              clearForm();
+              loadUniversities();
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+              alert("Add failed");
+            });
+        }
+      }
+
+      // ================= EDIT UNIVERSITY =================
+
+      function editUniversity(id) {
+        fetch("http://localhost:3000/universities")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (universities) {
+            const university = universities.find(function (uni) {
+              return uni.id === id;
+            });
+
+            // Fill form with existing data
+            document.getElementById("universityId").value = university.id;
+            document.getElementById("name").value = university.name;
+            document.getElementById("country").value = university.country;
+            document.getElementById("city").value = university.city;
+            document.getElementById("courses").value = university.courses;
+            document.getElementById("tuition").value = university.tuition;
+            document.getElementById("image").value = university.image;
+            document.getElementById("website").value = university.website;
+            document.getElementById("description").value =
+              university.description;
+
+            // Scroll to top so user can see the form
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+            alert("Failed to load university for editing");
+          });
+      }
+
+      // ================= DELETE UNIVERSITY =================
+
+      function deleteUniversity(id) {
+        const confirmDelete = confirm(
+          "Are you sure you want to delete this university?",
+        );
+
+        if (!confirmDelete) {
+          return;
+        }
+
+        fetch("http://localhost:3000/universities/" + id, {
+          method: "DELETE",
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            alert("University deleted successfully");
+            loadUniversities();
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+            alert("Delete failed");
+          });
+      }
+
+      // ================= CLEAR FORM =================
+
+      function clearForm() {
+        document.getElementById("universityId").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("country").value = "";
+        document.getElementById("city").value = "";
+        document.getElementById("courses").value = "";
+        document.getElementById("tuition").value = "";
+        document.getElementById("image").value = "";
+        document.getElementById("website").value = "";
+        document.getElementById("description").value = "";
+      }
+
+      // ================= INITIAL LOAD =================
+
+      loadUniversities();
+    </script>
   </body>
 </html>

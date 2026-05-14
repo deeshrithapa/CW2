@@ -88,7 +88,7 @@
               </div>
             </div>
             <div class="auth-field">
-              <label for="regPhone">Phone </label>
+              <label for="regPhone">Phone</label>
               <div class="auth-input-wrap">
                 <i class="fa-solid fa-phone"></i>
                 <input type="tel" id="regPhone" placeholder="+44 7700 000000" />
@@ -128,7 +128,9 @@
             </div>
           </div>
 
-          <button class="auth-submit">Create Account</button>
+          <button class="auth-submit" onclick="register()">
+            Create Account
+          </button>
 
           <p class="auth-terms">
             By registering you agree to our Terms of Service and Privacy
@@ -138,10 +140,53 @@
         </div>
       </div>
     </main>
+
     <footer class="footer" id="site-footer"></footer>
 
     <script src="../js/components.js"></script>
     <script src="../js/script.js"></script>
-    <script src="../js/register.js"></script>
+
+    <script>
+      // ================= REGISTER =================
+
+      function register() {
+        const full_name = document.getElementById("regName").value;
+        const age = document.getElementById("regAge").value;
+        const phone = document.getElementById("regPhone").value;
+        const email = document.getElementById("regEmail").value;
+        const address = document.getElementById("regAddress").value;
+        const password = document.getElementById("regPassword").value;
+
+        fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            full_name: full_name,
+            age: age,
+            phone: phone,
+            email: email,
+            address: address,
+            password: password,
+          }),
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.success) {
+              alert("Registration successful");
+              window.location.href = "login.html";
+            } else {
+              alert(data.message);
+            }
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+            alert("Registration failed");
+          });
+      }
+    </script>
   </body>
 </html>

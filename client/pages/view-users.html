@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>View Users</title>
-
     <link rel="stylesheet" href="../css/style.css" />
   </head>
 
@@ -15,11 +13,9 @@
 
       <div class="admin-topbar">
         <h1 class="admin-title">Registered Users</h1>
-
-        <a href="admin-dashboard.html" class="back-btn">
-          ← Back to Dashboard
-        </a>
+        <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
       </div>
+
       <!-- TABLE -->
 
       <div class="table-wrapper">
@@ -29,15 +25,55 @@
               <th>ID</th>
               <th>Full Name</th>
               <th>Email</th>
+              <th>Address</th>
+              <th>Age</th>
+              <th>Phone Number</th>
               <th>Role</th>
             </tr>
           </thead>
-
           <tbody id="usersTableBody"></tbody>
         </table>
       </div>
     </section>
 
-    <script src="../js/view-users.js"></script>
+    <script>
+      // ================= LOAD USERS =================
+
+      function loadUsers() {
+        fetch("http://localhost:3000/users")
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (users) {
+            const tableBody = document.getElementById("usersTableBody");
+
+            tableBody.innerHTML = "";
+
+            users.forEach(function (user) {
+              const row = document.createElement("tr");
+
+              row.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.full_name}</td>
+                <td>${user.email}</td>
+                <td>${user.address}</td>
+                <td>${user.age}</td>
+                <td>${user.phone}</td>
+                <td>${user.role}</td>
+              `;
+
+              tableBody.appendChild(row);
+            });
+          })
+          .catch(function (error) {
+            console.error("Error:", error);
+            alert("Failed to load users");
+          });
+      }
+
+      // ================= INITIAL LOAD =================
+
+      loadUsers();
+    </script>
   </body>
 </html>

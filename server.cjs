@@ -37,7 +37,7 @@ pool.connect((err) => {
 app.get("/users", async (req, res) => {
   try {
     const result = await pool.query(
-      "SELECT id, full_name, email, role FROM users",
+      "SELECT id, full_name, email, address, age, phone, role FROM users",
     );
     res.json(result.rows);
   } catch (err) {
